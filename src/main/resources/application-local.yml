@@ -1,0 +1,8 @@
+server:
+  servlet:
+    context-path: /smarthack-be/api/
+  port:
+    8080
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/smarthacklocal

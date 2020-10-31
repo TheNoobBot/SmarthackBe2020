@@ -1,0 +1,35 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop # change this to none after db is created
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://database:5432/smarthack
+    username: user
+    password: sudo
+    platform: postgres
+
+server:
+  servlet:
+    context-path: /smarthack-be/api/
+  port:
+    2020
+  address:
+    0.0.0.0
+
+logging:
+  level:
+    com:
+      smarthack:
+        sudo:
+          interceptor:
+            DEBUG
+      root: INFO
+
+predefined:
+  admin:
+    username: admin
+    password: admin
