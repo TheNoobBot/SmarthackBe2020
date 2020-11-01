@@ -130,8 +130,10 @@ public class UserController {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
      */
     @GetMapping("/users")
-    public ResponseEntity<List<UserDto>> getAllUsers(@RequestParam(defaultValue = "") String cnp, @RequestParam(defaultValue = "false") String patient) {
-        return ResponseEntity.ok(userService.findAll(cnp, "true".equals(patient)));
+    public ResponseEntity<List<UserDto>> getAllUsers(@RequestParam(defaultValue = "") String cnp,
+            @RequestParam(defaultValue = "") String doctorCnp,
+            @RequestParam(defaultValue = "false") String patient) {
+        return ResponseEntity.ok(userService.findAll(cnp, "true".equals(patient), doctorCnp));
     }
 
     @GetMapping("/users/{cnp}")

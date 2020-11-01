@@ -9,12 +9,14 @@ import com.smarthack.sudo.dto.vm.ManagedUserVM;
 import com.smarthack.sudo.repository.DoctorRepository;
 import com.smarthack.sudo.repository.PatientRepository;
 import com.smarthack.sudo.repository.UserRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,14 +27,25 @@ public class UserService extends BasicService<User, UserDto, String> {
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
 
-    public UserService(UserMapper userMapper, UserRepository userRepository, PasswordEncoder passwordEncoder, DoctorRepository doctorRepository, PatientRepository patientRepository) {
+    public UserService(UserMapper userMapper, UserRepository userRepository, PasswordEncoder passwordEncoder, DoctorRepository doctorRepository,
+            PatientRepository patientRepository) {
         super(userRepository, userMapper);
         this.passwordEncoder = passwordEncoder;
         this.doctorRepository = doctorRepository;
         this.patientRepository = patientRepository;
     }
 
-    public List<UserDto> findAll(String cnp, boolean patientFilter) {
+    public List<UserDto> findAll(String cnp, boolean patientFilter, String doctorCnp) {
+        if (StringUtils.isNotBlank(doctorCnp)) {
+            return mapper.convertSource(
+                    patientRepository.findAll()
+                            .stream()
+                            .filter(user -> user.getCnp().contains(cnp)
+                                    && Objects.nonNull(user.getDoctor())
+                                    && user.getDoctor().getCnp().equals(doctorCnp))
+                            .map(user -> super.repository.findById(user.getCnp()).get())
+                            .collect(Collectors.toList()));
+        }
         List<User> all = repository.findAll().stream().filter(user -> user.getCnp().contains(cnp)).collect(Collectors.toList());
         Map<String, UserDto> userMap = all.stream().collect(Collectors.toMap(User::getCnp, mapper::convertSource));
         doctorRepository.findAll()
@@ -42,8 +55,8 @@ public class UserService extends BasicService<User, UserDto, String> {
                 .stream().filter(user -> user.getCnp().contains(cnp)).collect(Collectors.toList())
                 .forEach(patient -> userMap.get(patient.getCnp()).setEpacient(true));
         List<UserDto> users = new ArrayList<>(userMap.values());
-        if(patientFilter) {
-             users = users.stream().filter(userDto -> !(userDto.isEpacient() || userDto.isEdoctor())).collect(Collectors.toList());
+        if (patientFilter) {
+            users = users.stream().filter(userDto -> !(userDto.isEpacient() || userDto.isEdoctor())).collect(Collectors.toList());
         }
         return users;
     }
@@ -53,10 +66,10 @@ public class UserService extends BasicService<User, UserDto, String> {
         UserDto one = super.findOne(s);
         Optional<Doctor> doctorOptional = doctorRepository.findById(s);
         Optional<Patient> patientOptional = patientRepository.findById(s);
-        if(doctorOptional.isPresent()) {
+        if (doctorOptional.isPresent()) {
             one.setEdoctor(true);
         }
-        if(patientOptional.isPresent()) {
+        if (patientOptional.isPresent()) {
             one.setEpacient(true);
         }
         return one;
