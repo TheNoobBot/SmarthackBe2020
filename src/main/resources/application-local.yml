@@ -3,6 +3,9 @@ server:
     context-path: /smarthack-be/api/
   port:
     8080
+  jpa:
+    hibernate:
+      ddl-auto: create # change this to none after db is created
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/smarthacklocal
+    url: jdbc:postgresql://localhost:5432/smarthack
