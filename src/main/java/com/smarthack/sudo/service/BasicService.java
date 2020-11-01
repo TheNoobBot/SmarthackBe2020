@@ -16,7 +16,7 @@ public class BasicService<DAO, DTO, KEY> {
         this.mapper = mapper;
     }
 
-    public DTO createUser(DTO dto) {
+    public DTO create(DTO dto) {
         DAO dao = mapper.convertTarget(dto);
         DAO save = repository.save(dao);
         return mapper.convertSource(save);

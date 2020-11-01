@@ -19,11 +19,20 @@ public class PrescriptionDto {
     private Integer recurrencyTime;
     private Boolean permanent;
     private Integer recurrencyCount;
-    private Integer deliveredCount;
+    private Integer deliveredCount = 0;
     private PrescriptionStatus status;
     private Boolean insured;
+    private String items;
+    private String patientCnp;
 
-    private PatientDto patient;
+    public String getItems() {
+        return items;
+    }
+
+    public PrescriptionDto setItems(String items) {
+        this.items = items;
+        return this;
+    }
 
     public String getId() {
         return id;
@@ -133,12 +142,12 @@ public class PrescriptionDto {
         return this;
     }
 
-    public PatientDto getPatient() {
-        return patient;
+    public String getPatientCnp() {
+        return patientCnp;
     }
 
-    public PrescriptionDto setPatient(PatientDto patient) {
-        this.patient = patient;
+    public PrescriptionDto setPatientCnp(String patientCnp) {
+        this.patientCnp = patientCnp;
         return this;
     }
 }

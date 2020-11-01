@@ -36,6 +36,7 @@ public class UserDto {
     private String birthdate;
 
     private boolean edoctor = false;
+    private boolean epacient = false;
 
     public boolean isEdoctor() {
         return edoctor;
@@ -43,6 +44,15 @@ public class UserDto {
 
     public UserDto setEdoctor(boolean edoctor) {
         this.edoctor = edoctor;
+        return this;
+    }
+
+    public boolean isEpacient() {
+        return epacient;
+    }
+
+    public UserDto setEpacient(boolean epacient) {
+        this.epacient = epacient;
         return this;
     }
 

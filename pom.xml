@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<jar.fileName>${project.name}-${project.version}</jar.fileName>
+		<jar.fileName>app</jar.fileName>
 		<validation-api.version>2.0.1.Final</validation-api.version>
 
 	</properties>

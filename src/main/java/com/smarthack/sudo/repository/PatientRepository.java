@@ -17,4 +17,5 @@ public interface PatientRepository extends JpaRepository<Patient, String>, JpaSp
 
     @EntityGraph(value = "Patient.doctor", type = EntityGraph.EntityGraphType.FETCH)
     List<Patient> findAllByDoctorCnp(String cnp);
+
 }

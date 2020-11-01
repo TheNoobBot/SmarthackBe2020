@@ -24,11 +24,11 @@ public class Order {
     @Column(length = 50)
     private String id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="prescription_id")
     private Prescription prescription;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="doctor_id")
     private Doctor doctor;
 

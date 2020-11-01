@@ -2,6 +2,7 @@ package com.smarthack.sudo.controller;
 
 import com.smarthack.sudo.domain.Patient;
 import com.smarthack.sudo.dto.PatientDto;
+import com.smarthack.sudo.dto.UserDto;
 import com.smarthack.sudo.service.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +31,15 @@ public class PatientController {
     }
 
     @GetMapping("/doctor/{doctorCnp}")
-    List<PatientDto> getPatientsForDoctor(@PathVariable String doctorCnp) {
+    List<UserDto> getPatientsForDoctor(@PathVariable String doctorCnp) {
         return patientService.getPatientsForDoctor(doctorCnp);
     }
+
+    @GetMapping("{cnp}/doctor")
+    UserDto getDoctorForPatient(@PathVariable String cnp) {
+        return patientService.getDoctorForPatient(cnp);
+    }
+
 
     @PostMapping
     PatientDto saveAsPatient(@RequestBody PatientDto patientDto) {

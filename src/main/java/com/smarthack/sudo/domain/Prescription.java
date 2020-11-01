@@ -1,5 +1,6 @@
 package com.smarthack.sudo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.smarthack.sudo.domain.enumeration.PrescriptionStatus;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,6 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,12 +68,24 @@ public class Prescription implements Serializable {
     @Column(name = "insured")
     private Boolean insured;
 
+    @Column(name = "items")
+    private String items;
+
     @OneToMany(mappedBy = "prescription", orphanRemoval = true)
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "prescriptions", allowSetters = true)
+    @JsonIgnore
     private Patient patient;
+
+    public String getItems() {
+        return items;
+    }
+
+    public Prescription setItems(String items) {
+        this.items = items;
+        return this;
+    }
 
     public Boolean getPermanent() {
         return permanent;
@@ -276,18 +290,18 @@ public class Prescription implements Serializable {
     @Override
     public String toString() {
         return "Prescription{" +
-            "id=" + getId() +
-            ", location='" + getLocation() + "'" +
-            ", diagnostic='" + getDiagnostic() + "'" +
-            ", recipeNumber='" + getRecipeNumber() + "'" +
-            ", timestamp='" + getTimestamp() + "'" +
-            ", firstDelivery='" + getFirstDelivery() + "'" +
-            ", recurrencyTime=" + getRecurrencyTime() +
-            ", permanent='" + isPermanent() + "'" +
-            ", recurrencyCount=" + getRecurrencyCount() +
-            ", deliveredCount=" + getDeliveredCount() +
-            ", status='" + getStatus() + "'" +
-            ", insured='" + isInsured() + "'" +
-            "}";
+                "id=" + getId() +
+                ", location='" + getLocation() + "'" +
+                ", diagnostic='" + getDiagnostic() + "'" +
+                ", recipeNumber='" + getRecipeNumber() + "'" +
+                ", timestamp='" + getTimestamp() + "'" +
+                ", firstDelivery='" + getFirstDelivery() + "'" +
+                ", recurrencyTime=" + getRecurrencyTime() +
+                ", permanent='" + isPermanent() + "'" +
+                ", recurrencyCount=" + getRecurrencyCount() +
+                ", deliveredCount=" + getDeliveredCount() +
+                ", status='" + getStatus() + "'" +
+                ", insured='" + isInsured() + "'" +
+                "}";
     }
 }

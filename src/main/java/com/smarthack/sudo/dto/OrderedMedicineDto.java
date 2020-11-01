@@ -10,7 +10,7 @@ public class OrderedMedicineDto  {
     private Integer quantity;
     private Double price;
     private String title;
-    private PharmacyDto pharmacy;
+    private String pharmacyName;
 
     public String getId() {
         return id;
@@ -57,12 +57,12 @@ public class OrderedMedicineDto  {
         return this;
     }
 
-    public PharmacyDto getPharmacy() {
-        return pharmacy;
+    public String getPharmacyName() {
+        return pharmacyName;
     }
 
-    public OrderedMedicineDto setPharmacy(PharmacyDto pharmacy) {
-        this.pharmacy = pharmacy;
+    public OrderedMedicineDto setPharmacyName(String pharmacyName) {
+        this.pharmacyName = pharmacyName;
         return this;
     }
 }
